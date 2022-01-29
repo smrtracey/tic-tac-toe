@@ -52,7 +52,7 @@ const updateGameArray =(index)=>{
     console.log('updating game array');
     const tempArray= [...gameArray];
     
-    // if X's turn value is 1, if Y's value is 0
+    // Place X or O based on turn
     if(xTurn){
         tempArray[index] = 'X';
     }
@@ -61,11 +61,11 @@ const updateGameArray =(index)=>{
     }
     
     setGameArray(tempArray);
-    
     checkForWinner(gameArray);
     setXTurn(!xTurn);
 }
 
+// function to set all square content back to null and set the winner to None.
 const resetGameArray = () =>{
     setGameArray(new Array(9).fill(null));
     setWinner('None');
@@ -77,11 +77,11 @@ useEffect(()=>{
 
   return (
     <GameBoard
-    gameArray = {gameArray}
-    xTurn = {xTurn}
-    updateGameArray = {updateGameArray}
-    resetGameArray ={resetGameArray}
-    winner = {winner}
+        gameArray = {gameArray}
+        xTurn = {xTurn}
+        updateGameArray = {updateGameArray}
+        resetGameArray ={resetGameArray}
+        winner = {winner}
     />
   )
 };

@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import Square from './Square';
 
 import '../styles/gameboard.css'
@@ -13,8 +12,6 @@ const GameBoard = ({xTurn, gameArray, updateGameArray, resetGameArray, winner}) 
     return (
     <div className = 'gameBoard'>
        <h1>Tic Tac Toe</h1>
-       
-
        <div className='next-player-display'>
            <h2> Next Player : </h2>
            <span>{xTurn? 'X' : 'O'}</span>
@@ -28,7 +25,7 @@ const GameBoard = ({xTurn, gameArray, updateGameArray, resetGameArray, winner}) 
 
 
        <div className=' square-grid'>
-           
+           {/* Loop over the GameArray and create a square for every element in it */}
         {
             gameArray.map((square, i)=>{
                 return(
@@ -36,9 +33,7 @@ const GameBoard = ({xTurn, gameArray, updateGameArray, resetGameArray, winner}) 
                 )
             })
         }
-            
-           
-           
+   
        </div>
         
     </div>
