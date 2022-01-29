@@ -1,0 +1,40 @@
+.gameBoard{
+    width: 30vw;
+    border: 3px solid hsl(164 95% 43%);
+    background: hsl(44 98% 50%);
+    border-radius: 10px;
+    text-align: center;
+    padding: 15px;
+}
+
+h2{
+    font-size: 1.2rem;
+}
+
+.square-grid{
+    display:grid;
+    width: 60%;
+    margin: 0 auto;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: .5rem;
+}
+
+.winner-display,
+.next-player-display{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+}
+
+span{
+    font-size: 1.2rem;
+    margin-left: 20px;
+}
+
+.reset-btn{
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
