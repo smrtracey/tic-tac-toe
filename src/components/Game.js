@@ -1,4 +1,3 @@
-import { calculateNewValue } from '@testing-library/user-event/dist/utils';
 import {useState, useEffect} from 'react';
 import GameBoard from './GameBoard';
 
