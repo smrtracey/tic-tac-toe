@@ -69,6 +69,7 @@ const updateGameArray =(index)=>{
 const resetGameArray = () =>{
     setGameArray(new Array(9).fill(null));
     setWinner('None');
+    setXTurn(true);
 }
 // Any time the game Array is changed, check if theres a winner.
 useEffect(()=>{
