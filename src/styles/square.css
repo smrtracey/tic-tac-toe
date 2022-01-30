@@ -2,9 +2,11 @@
     width: 100%;
     margin: 0 auto;
     aspect-ratio: 1;
+    background: hsl(164 95% 43%);
     border: 2px solid hsl(164 95% 43%);
     display:flex;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
+    font-size: 5rem;
+    cursor:pointer;
 }
