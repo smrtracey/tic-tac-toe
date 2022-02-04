@@ -1,42 +1,59 @@
+import {useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import Square from './Square';
+import Endgame from './RoundEnd';
 
 import '../styles/gameboard.css'
 
 
-const GameBoard = ({xTurn, gameArray, updateGameArray, resetGameArray, winner}) => {
+const GameBoard = ({gameState, updateGameState, mode, nextTurn, xWins, oWins, ties, resetGameState}) => {
 
-    const handleReset =()=>{
-        resetGameArray();
-    }
-
+   
     return (
-    <div className = 'gameBoard'>
-       <h1>Tic Tac Toe</h1>
-       <div className='next-player-display'>
-           <h2> Next Player : </h2>
-           <span>{xTurn? 'X' : 'O'}</span>
-       </div>
-       <div className='winner-display'>
-        <h2> Winner: </h2>
-        <span>{winner}</span>
-       </div>
+    <>
+    <div className='top-wrapper'>
+        <div className='back-wrapper'>
+            <Link to = '/' className = 'link'><button>Back</button></Link>
+        </div>
+        <div className='show-turn'>
+            <p> Next Turn : {nextTurn}</p>
+        </div>
+        <div className='reset'>
+            <button onClick = {resetGameState}>Reset</button>
+        </div>
+    </div>
+    
 
-       <button className='reset-btn' onClick={()=>handleReset()}>Reset</button> 
+    <div className = 'gameboard'>
+       
+        <div className='game-grid'>
+            {
+                gameState.map((square, i)=>{
+                    return(
+                        <Square key = {i} content ={square} index ={i} updateGameState ={updateGameState} mode = {mode} />
+                    )
+                })
+            }
+        </div>
 
-
-       <div className=' square-grid'>
-           {/* Loop over the GameArray and create a square for every element in it */}
-        {
-            gameArray.map((square, i)=>{
-                return(
-                    <Square key = {i} content ={square} index ={i} updateGameArray = {updateGameArray} winner = {winner}/>
-                )
-            })
-        }
+        <div className='results-grid'>
+            <div className='result x-wins'>
+                X Wins: {xWins}
+            </div>
+            <div className='result ties'>
+                Ties: {ties}
+            </div>
+            <div className='result y-wins'>
+                O Wins: {oWins}
+            </div>
+        </div>
+        
    
        </div>
+
+       </> 
         
-    </div>
+    
   )
 };
 

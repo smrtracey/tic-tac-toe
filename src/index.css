@@ -2,12 +2,30 @@
   margin:0;
   padding: 0;
   box-sizing: border-box;
+
+  --clr-main-bg : hsl(199,33%,14%);
+  --clr-secondary-bg: hsl(199,34%,18%);
+  --clr-light-text: hsl(185 18% 88%);
+
+  --clr-x: hsl(186 50% 61%);
+  --clr-o:hsl(45 97% 48%);
 }
 
 body{
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  background: var(--clr-main-bg);
 }
+
+.main-title{
+  color: var(--clr-light-text);
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  font-size: 2.1rem;
+}
+
+.link{
+  color:inherit;
+  text-decoration: none;
+}
+
 

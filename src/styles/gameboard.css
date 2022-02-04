@@ -1,47 +1,70 @@
-.gameBoard{
-    width: 30vw;
-    border: 3px solid hsl(164 95% 43%);
-    background: hsl(44 98% 50%);
-    border-radius: 10px;
-    text-align: center;
-    padding: 15px;
-}
-
-h1{
-    font-size: 3rem;
-}
-
-h2{
-    font-size: 1.2rem;
-}
-
-.square-grid{
-    display:grid;
-    width: 100%;
+.gameboard{
+    width: 90%;
     margin: 0 auto;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: .5rem;
 }
 
-.winner-display,
-.next-player-display{
-    display:flex;
-    justify-content: center;
+.top-wrapper{
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin: 10px auto;
 }
 
-span{
-    font-size: 1.2rem;
-    margin-left: 20px;
+.top-wrapper button{
+    padding: 10px;
+    border:0;
+    border-radius: 10px;
+    background: var(--clr-light-text);
+    cursor: pointer;
 }
 
-.reset-btn{
-    padding: 15px;
-    margin: 10px;
-    margin-bottom: 20px;
-    border: 1px solid black;
-    border-radius: 15px;
-    background: hsla(164 95% 43%/ 0.5);
-    font-size: 1.2rem;
+.show-turn{
+    width: 50%;
+    margin:0 auto;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--clr-secondary-bg);
+    color: var(--clr-light-text);
+    text-align: center;
+    font-size: 1.5rem;
 }
+
+.game-grid{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap:1rem;
+}
+
+
+.results-grid{
+    display: grid;
+    margin-top: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+    
+}
+.result{
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--clr-light-text);
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    background-color: var(--clr-secondary-bg);
+}
+
+.x-wins{
+    background-color: var(--clr-x);
+}
+
+.y-wins{
+    background-color: var(--clr-o);
+}
+
+.ties{
+    background-color: var(--clr-light-text);
+    color:black;
+}
+

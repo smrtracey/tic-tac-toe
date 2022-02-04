@@ -1,90 +1,173 @@
 import {useState, useEffect} from 'react';
+import Start from './Start';
 import GameBoard from './GameBoard';
+import { Routes, Route } from 'react-router-dom';
 
 const Game = () => {
 
-// Create an array of 9 for each square and make them all null initially.
-const [gameArray, setGameArray] = useState(new Array(9).fill(null));
-
-//State for player's turn 
-const[xTurn, setXTurn] = useState(true)
-// State for the winner
-const[winner, setWinner] = useState('None');
-
-// Function to check if there is a winner
-const checkForWinner =(squares)=>{
-    // A 2D array that stores all the winning lines
-    // There are only 8 possible win conditions.
-    const lines = [
-        [0,1,2],
-        [3,4,5],
-        [6,7,8],
-        [0,3,6],
-        [1,4,7],
-        [2,5,8],
-        [0,4,8],
-        [2,4,6]
-    ];
-    
-    // loop through the lines array and check if the content is the same in all of them, and not null.
-    for(let i = 0;i< lines.length;i++){
-        const [a,b,c] = lines[i];
-
-        if(squares[a] && (squares[a] === squares[b]) && (squares[b] === squares[c])){
-            changeWinner();
-        }   
+    const[winner, setWinner] = useState(null);
+    const[xWins, setXWins]= useState(0);
+    const[oWins, setOWins] = useState(0);
+    const[ties, setTies] = useState(0);
+    const[mode, setMode] = useState('CPU');
+    const changeMode = (value)=>{
+        setMode(value);
     }
+
+    const [marker, setMarker]= useState('X');
+    const changeMarker = (value)=>{
+        setMarker(value);
+
+    }
+
+    const [compTurn, setCompTurn] = useState(false);
+
+    const [nextTurn, setNextTurn] = useState('X');
+
+    const [turnCount, setTurnCount] = useState(0);
+
+    const [gameState, setGameState] = useState(new Array(9).fill(null));
+    const updateGameState = (index)=>{
+        const tempState = [...gameState];
+        tempState[index] = nextTurn;
+        setGameState(tempState);
+        setTurnCount(turnCount+1);
+    }
+
+    const compMove = ()=>{
+    
+        setTimeout(()=>{
+            let foundSpace = false;
+            while(!foundSpace){
+                const randDigit = Math.floor(Math.random() * 9)-1;
+                if(gameState[randDigit]===null){
+                    updateGameState(randDigit);
+                    foundSpace= true;
+                }
+            }
+        }, 1000)
+                
+    }
+
+    const checkForWinner =(squares)=>{
+    
+        const lines = [
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [2,4,6]
+        ];
+        
+       
+        for(let i = 0;i< lines.length;i++){
+            const [a,b,c] = lines[i];
+    
+            if(squares[a] && (squares[a] === squares[b]) && (squares[b] === squares[c])){
+                setWinner(squares[a]);
+                return true;
+            }
+           
+        }
+        return false;
+    }
+
+    const resetGameState=()=>{
+        setGameState(new Array(9).fill(null));
+        setWinner(null);
+        setNextTurn('X');
+        if(compTurn){
+            setCompTurn(false);
+        }
+    }
+
+    useEffect(()=>{
+            if(compTurn){
+                compMove();
+            }
+        
+    },[compTurn])
+
+    //After each move, if there's no winner, keep playing.
+    useEffect(()=>{
+        if(!checkForWinner(gameState)){
+            
+            if(nextTurn ==='X') setNextTurn('O');
+            else setNextTurn('X');
+            if(mode =='CPU')
+            {
+                setCompTurn(!compTurn);
+            }
+        }
+    },[gameState])
+
+
+    useEffect(()=>{
+        if(mode === 'CPU'){
+            if(marker === 'X'){
+                setCompTurn(false);
+            }
+            else{
+                setCompTurn(true);
+            }
+        }
+    },[marker])
+
+
+    useEffect(()=>{
+        if(winner === 'X'){
+            setXWins(xWins+1)
+        }
+        else if (winner === 'O'){
+            setOWins(oWins+1);
+        }
+    },[winner])
+
+    // default.
+    useEffect(()=>{
+        setNextTurn('X')
+        setCompTurn(false);
+    },[])
+
+    
+
+  return (<>
   
-    // If theres no winner.
-    return null
-}
 
-const changeWinner = ()=>{
-    if(xTurn){
-        setWinner('O');
-    }
-    else{
-        setWinner('X');
-    }
-}
-// Function to update the game state after each square is clicked.
-const updateGameArray =(index)=>{
-    console.log('updating game array');
-    const tempArray= [...gameArray];
+    <Routes>
+        <Route path = '/' element ={
+            <Start 
+            changeMode = {changeMode}
+            marker ={marker}
+            mode={mode}
+            changeMarker= {changeMarker}
+            />
+        }
+        />
+
+        <Route path = '/game' element ={
+            <GameBoard
+            mode={mode}
+            gameState = {gameState}
+            updateGameState ={updateGameState}
+            nextTurn = {nextTurn}
+            xWins = {xWins}
+            oWins = {oWins}
+            ties ={ties}
+            resetGameState={resetGameState}
+            
+           />}
+        />
+
+    </Routes>
     
-    // Place X or O based on turn
-    if(xTurn){
-        tempArray[index] = 'X';
-    }
-    else{
-        tempArray[index] = 'O';
-    }
-    
-    setGameArray(tempArray);
-    checkForWinner(gameArray);
-    setXTurn(!xTurn);
-}
 
-// function to set all square content back to null and set the winner to None.
-const resetGameArray = () =>{
-    setGameArray(new Array(9).fill(null));
-    setWinner('None');
-    setXTurn(true);
-}
-// Any time the game Array is changed, check if theres a winner.
-useEffect(()=>{
-    checkForWinner(gameArray);
-},[gameArray])
-
-  return (
-    <GameBoard
-        gameArray = {gameArray}
-        xTurn = {xTurn}
-        updateGameArray = {updateGameArray}
-        resetGameArray ={resetGameArray}
-        winner = {winner}
-    />
+    </>
   )
 };
 
 export default Game;
+
